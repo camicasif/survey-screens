@@ -1,0 +1,111 @@
+<div class="container mt-5">
+  <div *ngIf="isLoading; else formContent" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+
+  <ng-template #formContent>
+    <div class="card shadow p-4">
+      <h3 class="card-title text-center mb-4">Tus Datos</h3>
+      <form [formGroup]="respondentForm" (ngSubmit)="submitForm()">
+        <div class="mb-3">
+          <label for="ci" class="form-label">Carnet de Identidad</label>
+          <input
+            id="ci"
+            type="text"
+            formControlName="ci"
+            class="form-control"
+            (blur)="onBlurCI()"
+            [class.is-invalid]="respondentForm.get('ci')?.invalid && respondentForm.get('ci')?.touched"
+          />
+          <div *ngIf="respondentForm.get('ci')?.invalid && respondentForm.get('ci')?.touched" class="invalid-feedback" >
+            <small *ngIf="respondentForm.get('ci')?.errors?.['required']">El CI es requerido.</small>
+            <small *ngIf="respondentForm.get('ci')?.errors?.['pattern']">Solo se permiten números.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre</label>
+          <input
+            id="name"
+            type="text"
+            formControlName="name"
+            maxlength="255"
+            class="form-control"
+            [class.is-invalid]="respondentForm.get('name')?.invalid && respondentForm.get('name')?.touched"
+          />
+          <div *ngIf="respondentForm.get('name')?.invalid && respondentForm.get('name')?.touched" class="invalid-feedback">
+            <small *ngIf="respondentForm.get('name')?.errors?.['required']">El nombre es requerido.</small>
+            <small *ngIf="respondentForm.get('name')?.errors?.['maxlength']">Máximo 255 caracteres.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="surname" class="form-label">Apellidos</label>
+          <input
+            id="surname"
+            type="text"
+            formControlName="surname"
+            class="form-control"
+            [class.is-invalid]="respondentForm.get('surname')?.invalid && respondentForm.get('surname')?.touched"
+          />
+          <div *ngIf="respondentForm.get('surname')?.invalid && respondentForm.get('surname')?.touched" class="invalid-feedback">
+            <small>El apellido es requerido.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="age" class="form-label">Edad</label>
+          <input
+            id="age"
+            type="number"
+            formControlName="age"
+            class="form-control"
+            [class.is-invalid]="respondentForm.get('age')?.invalid && respondentForm.get('age')?.touched"
+          />
+          <div *ngIf="respondentForm.get('age')?.invalid && respondentForm.get('age')?.touched" class="invalid-feedback">
+            <small *ngIf="respondentForm.get('age')?.errors?.['required']">La edad es requerida.</small>
+            <small *ngIf="respondentForm.get('age')?.errors?.['min']">La edad mínima es 16.</small>
+            <small *ngIf="respondentForm.get('age')?.errors?.['max']">La edad máxima es 120.</small>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="careerId" class="form-label">Carrera</label>
+          <select
+            id="careerId"
+            formControlName="careerId"
+            class="form-select"
+            [class.is-invalid]="respondentForm.get('careerId')?.invalid && respondentForm.get('careerId')?.touched"
+          >
+            <option value="" disabled>Seleccione una carrera</option>
+            <option *ngFor="let career of careers" [ngValue]="career.id" >{{ career.name }}</option>
+          </select>
+          <div *ngIf="respondentForm.get('careerId')?.invalid && respondentForm.get('careerId')?.touched" class="invalid-feedback">
+            <small>Debe seleccionar una carrera.</small>
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="formId" class="form-label">Formulario</label>
+          <select
+            id="formId"
+            formControlName="formId"
+            class="form-select"
+            [class.is-invalid]="respondentForm.get('formId')?.invalid && respondentForm.get('formId')?.touched"
+          >
+            <option value="" disabled>Seleccione un formulario</option>
+            <option *ngFor="let form of forms" [ngValue]="form.id" >{{ form.title }}</option>
+          </select>
+          <div *ngIf="respondentForm.get('formId')?.invalid && respondentForm.get('formId')?.touched" class="invalid-feedback">
+            <small>Debe seleccionar un formulario.</small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100" [disabled]="respondentForm.invalid">Enviar</button>
+      </form>
+    </div>
+  </ng-template>
+</div>
