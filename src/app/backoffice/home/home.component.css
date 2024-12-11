@@ -1,0 +1,62 @@
+/**{*/
+/*  border: 1px solid red;*/
+/*}*/
+.container {
+  /*max-width: 800px;*/
+
+  height: 100%;
+  padding: 50px;
+}
+
+.list-container {
+  /*margin-left: 30px;*/
+  /*margin-right: 30px;*/
+  overflow-y: auto;  /* Habilita el scroll vertical */
+  flex-grow: 1;
+  height: 400px;
+
+}
+
+.form-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #e0e0e0;
+  flex-grow: 1; /* Permite que el contenedor crezca en función del contenido */
+  overflow: hidden;
+}
+
+.content-left {
+  display: flex;
+  flex-direction: column; /* Apila elementos verticalmente */
+  max-width: 70%; /* Asegura el límite del ancho */
+  flex-grow: 1; /* Permite que el contenedor crezca en función del contenido */
+  overflow: hidden; /* Evita desbordamientos horizontales */
+  align-self: stretch;
+}
+.content-left p {
+  word-wrap: break-word; /* Rompe palabras largas si es necesario */
+  overflow-wrap: break-word; /* Compatibilidad adicional */
+  white-space: normal; /* Permite que el texto haga saltos de línea */
+}
+
+.content-right {
+  min-width: 30%;
+  justify-content: flex-end; /* Asegura que los botones se alineen a la derecha */
+}
+
+mat-slide-toggle {
+  margin-right: 1rem;
+}
+
+mat-progress-spinner {
+  width: 50px;
+  height: 50px;
+}
+
+h4 {
+  margin: 0;
+  font-weight: bold;
+}
+
+.text-muted {
+  margin: 0;
+}

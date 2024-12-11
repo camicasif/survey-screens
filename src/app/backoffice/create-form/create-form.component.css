@@ -1,0 +1,7 @@
+
+
+.preguntas-container {
+  overflow-y: auto;  /* Habilita el scroll vertical */
+  flex-grow: 1;
+  height: 100%; /* Ensure it fills the height */
+}

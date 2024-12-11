@@ -1,0 +1,66 @@
+<!-- Vista Inicial del Formulario -->
+<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="!isQuizActive">
+  <div class="container p-5" *ngIf="formComplete">
+    <!-- Título del formulario -->
+    <h1 class="card-title text-center mb-3">{{ formComplete.title }}</h1>
+    <p class="card-text text-center text-muted mb-4">{{ formComplete.description }}</p>
+
+    <!-- Información adicional -->
+    <div class="text-center mt-4 mb-5">
+      <p class="mb-2"><strong>Número de veces tomado:</strong> {{ formComplete.nTimesTaken }}</p>
+      <p><strong>Cantidad de preguntas:</strong> {{ formComplete.questions.length }}</p>
+      <p><strong>Tiempo máximo por pregunta:</strong> 2 mins</p>
+    </div>
+
+    <!-- Botón Empezar -->
+    <div class="d-flex justify-content-center mt-5">
+      <button class="btn btn-primary btn-lg px-4" (click)="goToAnswers()">Empezar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Vista de Pregunta Activa -->
+<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="isQuizActive && !formCompleted">
+  <div class="container p-5 d-flex flex-column justify-content-between form-container">
+
+    <!-- Pregunta en la parte superior -->
+    <div class="question-container text-center">
+      <h2>{{ currentQuestion.description }}</h2>
+    </div>
+
+    <div class="answers-container d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-wrap justify-content-center buttons-container"  *ngIf="showQuestionAndAnswers" >
+        <div  *ngFor="let answer of currentQuestion.answers" class="answer-button-div">
+        <button
+                class="btn btn-outline-primary btn-lg answer-button"
+                (click)="selectAnswer(answer)">
+          {{ answer.description }}
+        </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón "Continuar" -->
+    <div class="continue-button-container text-center">
+      <button *ngIf="!showQuestionAndAnswers" class="btn btn-primary btn-lg" (click)="startQuestion()">Continuar</button>
+    </div>
+
+    <div class="footer-container d-flex justify-content-between align-items-center">
+      <span class="text-muted">{{ currentQuestionIndex + 1 }}/{{ totalQuestions }}</span>
+      <span class="text-muted">Tiempo restante: {{ timerDisplay }}</span>
+      <button class="btn btn-icon" (click)="reStartQuestion()">
+        <i class="bi bi-arrow-clockwise" *ngIf="showQuestionAndAnswers"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="formCompleted">
+  <div class="container text-center p-5">
+    <div class="mb-4">
+      <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+    </div>
+    <h2 class="text-success">¡Has respondido todas las preguntas de este formulario!</h2>
+    <p class="text-muted mt-3">Gracias por completar el formulario.</p>
+    <button class="btn btn-primary mt-4 px-5" (click)="goBack()">Volver</button>
+  </div>
+</div>

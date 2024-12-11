@@ -1,0 +1,8 @@
+<div class="heatmap-container">
+  <canvas #heatmap></canvas>
+  <div *ngFor="let block of blocks"
+       [ngStyle]="{'left': block.x + 'px', 'top': block.y + 'px'}"
+       class="block"
+       (click)="onBlockClick(block)">
+  </div>
+</div>

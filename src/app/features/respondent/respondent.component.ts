@@ -3,11 +3,13 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { Career } from '../../core/models/respondent.model';
 import { RespondentApiService } from '../../core/services/api/respondent-api.service';
-import { Form } from '../../core/models/form.model';
+import { SimpleForm } from '../../core/models/form.model';
 import { FormApiService } from '../../core/services/api/form-api.service';
-import { forkJoin, switchMap } from 'rxjs';
+import { forkJoin, map, switchMap } from 'rxjs';
 import Notiflix from 'notiflix';
 import { SurveyApiService } from '../../core/services/api/survey-api.service';
+import { Router } from '@angular/router';
+import { StateService } from '../../core/services/state/state.service';
 
 @Component({
   selector: 'app-respondent',
@@ -19,18 +21,19 @@ import { SurveyApiService } from '../../core/services/api/survey-api.service';
 export class RespondentComponent implements OnInit{
   respondentForm: FormGroup;
   careers: Career[] = [];
-  forms: Form[] = [];
+  forms: SimpleForm[] = [];
 
   isLoading = true;
   constructor(
     private fb: FormBuilder,
     private respondentApiService: RespondentApiService,
     private formApiService: FormApiService,
-    private surveyApiService: SurveyApiService
+    private surveyApiService: SurveyApiService,
+    private router: Router,
+    private stateService: StateService,
 
   ) {
     this.respondentForm = this.fb.group({
-      id: [null],
       ci: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       surname: ['', Validators.required],
@@ -67,7 +70,6 @@ export class RespondentComponent implements OnInit{
         next: (respondent) => {
           // Autocompleta el formulario con los datos obtenidos
           this.respondentForm.patchValue({
-            id: respondent.id,
             name: respondent.name,
             surname: respondent.surname,
             age: respondent.age,
@@ -83,35 +85,33 @@ export class RespondentComponent implements OnInit{
 
   submitForm(): void {
     if (this.respondentForm.valid) {
-      const { id, ci, name, surname, age, careerId } = this.respondentForm.value;
+      const {  ci, name, surname, age, careerId } = this.respondentForm.value;
       const formId = this.respondentForm.get('formId')?.value;
-      console.log("Form:", formId, this.respondentForm.get('form'))
-
       const respondentData = {
-        id,  // Incluye el ID solo si existe
         ci,
         name,
         surname,
         age,
         career: { id: careerId}  // Solo envía el id de la carrera
       };
+      this.stateService.setRespondentData(respondentData);
+      this.stateService.setFormId(formId);
+
       this.respondentApiService.createOrUpdateRespondent(respondentData).pipe(
         switchMap((respondent) => {
-          const respondentId = respondent.id; // ID del respondent creado o actualizado
+          const respondentId = respondent.ci; // ID del respondent creado o actualizado
           return this.surveyApiService.createSurvey({ formId, respondentId });
         })
       ).subscribe({
-        next: () => {
-          Notiflix.Report.success(
-            'Encuesta creada',
-            'La encuesta se ha creado exitosamente.',
-            'Cerrar'
-          );
+        next: (survey) => {
+          this.stateService.setSurveyId(survey.id); // Guarda el ID del survey creado en el servicio de estado
+          this.router.navigate(['/form']); // Navega a la pantalla del formulario
         },
-        error: () => {
+        error: (errorResponse) => {
+          const errorMessage = errorResponse?.message || 'Hubo un error al enviar los datos. Contacte con el administrador.';
           Notiflix.Report.failure(
-            'Error en el servidor',
-            'Hubo un error al enviar los datos. Contacte con el administrador.',
+            'Error al enviar los datos',
+            errorMessage,
             'Cerrar'
           );
         }

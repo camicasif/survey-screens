@@ -1,5 +1,4 @@
 export interface Respondent {
-  id: number;
   ci: number;
   name: string;
   surname: string;

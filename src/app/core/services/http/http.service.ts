@@ -49,6 +49,8 @@ export class HttpService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('HTTP error:', error);
-    return throwError(() => new Error('Error en la petición HTTP'));
+
+    // Propaga el error completo para acceso en el `subscribe`
+    return throwError(() => error?.error?.message);
   }
 }

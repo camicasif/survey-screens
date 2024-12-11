@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from '../http/http.service';
-import { Form } from '../../models/form.model';
+import { SimpleForm } from '../../models/form.model';
 import { CreateDecisionDto, CreateSurveyDto, Decision, Survey, UpdateSurveyDto } from '../../models/survey.model';
 @Injectable({
   providedIn: 'root'

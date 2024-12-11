@@ -1,0 +1,48 @@
+<div [formGroup]="formGroup" class="question-container p-3 border rounded bg-light shadow-sm">
+  <!-- Header: Input para la pregunta y botón eliminar -->
+  <div class="d-flex align-items-center mb-3">
+    <mat-form-field appearance="outline" class="flex-grow-1 me-3 compact-field" subscriptSizing="dynamic">
+      <mat-label>Pregunta</mat-label>
+<!--      <input matInput id="pregunta" formControlName="pregunta" placeholder="Escribe tu pregunta" />-->
+      <textarea
+        matInput
+        id="pregunta"
+        formControlName="pregunta"
+        placeholder="Escribe tu pregunta"
+        rows="2"
+      ></textarea>
+    </mat-form-field>
+    <button mat-stroked-button         *ngIf="canDelete"
+            color="warn" type="button" (click)="removeQuestion()">Eliminar Pregunta</button>
+  </div>
+
+  <!-- Respuestas -->
+  <div formArrayName="respuestas" class="responses-container">
+    <div
+      *ngFor="let respuesta of responses.controls; let i = index"
+      [formGroupName]="i"
+      class="d-flex align-items-center mb-2"
+    >
+      <mat-form-field appearance="outline" class="flex-grow-1 me-3" subscriptSizing="dynamic">
+        <mat-label>Respuesta</mat-label>
+        <input matInput formControlName="respuesta" placeholder="Escribe una respuesta" />
+      </mat-form-field>
+      <button
+        *ngIf="respuesta.value.canDelete"
+        mat-icon-button
+        color="warn"
+        type="button"
+        (click)="removeResponse(i)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Botón para agregar respuesta -->
+  <div class="d-flex justify-content-end mt-3">
+    <button mat-stroked-button type="button" (click)="addResponse()" [disabled]="responses.length >= 4">
+      Agregar Respuesta
+    </button>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+
+<div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<div class="container mt-5" *ngIf="!isLoading">
+  <!-- Loader -->
+
+
+  <!-- Content -->
+  <div >
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="mb-0">Lista de Formularios</h2>
+      <button mat-raised-button color="primary" (click)="addForm()">Agregar formulario</button>
+    </div>
+
+    <mat-list class="list-container">
+      <div *ngFor="let form of forms" class="form-item">
+        <div class="d-flex w-100 align-items-center justify-content-between">
+          <!-- Contenido Izquierdo -->
+          <div class="content-left">
+            <h4 class="mb-1">{{ form.title }}</h4>
+            <p class="text-muted mb-0">{{ form.description }}</p>
+          </div>
+
+          <!-- Botones a la Derecha -->
+          <div class="content-right d-flex align-items-center">
+            <mat-slide-toggle
+              color="primary"
+              [checked]="form.isOpen"
+              (change)="toggleFormStatus(form)"
+            >
+              {{ form.isOpen ? 'Abierto' : 'Cerrado' }}
+            </mat-slide-toggle>
+            <button
+              mat-icon-button
+              color="accent"
+              aria-label="Editar formulario"
+              (click)="editForm(form)"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-list>
+  </div>
+</div>

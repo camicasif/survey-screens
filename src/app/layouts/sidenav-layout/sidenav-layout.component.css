@@ -1,0 +1,57 @@
+
+/* Parent container spans full height */
+.d-flex {
+  display: flex;
+  overflow: hidden; /* Prevent scrolling on the parent */
+}
+
+/* Main content area with scrollable content */
+.content-container {
+  flex-grow: 1;
+  /*overflow: auto; !* Enable scrolling only here *!*/
+  height: 100%; /* Ensure it fills the height */
+}
+
+/* Sidebar remains fixed */
+/*#sidebar {*/
+/*  !*display: flex;*!*/
+/*  !*flex-direction: column;*!*/
+/*  !*background-color: #343a40; *!*/
+/*  !* Dark background *!*/
+/*  color: white;*/
+/*  transition: width 0.3s;*/
+/*}*/
+
+
+#sidebar {
+  transition: width 0.3s;
+  /*height: 100vh; !* Full height of the viewport *!*/
+}
+
+#sidebar.collapsed {
+  width: 60px;
+}
+
+#sidebar .sidebar-text {
+  transition: opacity 0.3s;
+}
+
+#sidebar.collapsed .sidebar-text {
+  opacity: 0; /* Hide the text in collapsed mode */
+  pointer-events: none;
+}
+
+#sidebar .btn {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sidebar ul.nav {
+  margin-top: 20px;
+}
+
+#sidebar ul.nav li a {
+  padding: 10px;
+  transition: all 0.3s;
+}

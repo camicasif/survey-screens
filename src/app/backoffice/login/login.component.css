@@ -1,0 +1,16 @@
+.login-container {
+  /*background: linear-gradient(to right, #4facfe, #00f2fe);*/
+}
+
+.card {
+  width: 400px;
+  border-radius: 8px;
+}
+
+button {
+  font-weight: bold;
+}
+
+.text-danger {
+  font-size: 0.85rem;
+}
