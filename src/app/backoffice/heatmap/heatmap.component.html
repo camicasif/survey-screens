@@ -1,6 +1,8 @@
 <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
+<canvas #canvas class="overlay-canvas"></canvas>
+
 <div  *ngIf="!isLoading &&initialData">
   <div class="container p-5" *ngIf="initialData">
     <!-- Título del formulario -->
@@ -28,6 +30,7 @@
 <!--    &lt;!&ndash; Pregunta en la parte superior &ndash;&gt;-->
     <div class="question-container text-center">
       <h2>{{ currentQuestion.description }}</h2>
+
     </div>
 
     <div class="answers-container d-flex justify-content-center align-items-center">

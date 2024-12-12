@@ -41,6 +41,7 @@ export class FormComponent implements OnInit {
     this.stateService.getFormId().subscribe(id => {
       if (id !== null) {
         this.formId = id;
+        console.log("formId: ", id);
         this.formApiService.getFormWithQuestionsAndAnswers(this.formId).subscribe({
           next: (formComplete: FormComplete) => {
             this.formComplete = formComplete;
@@ -55,10 +56,13 @@ export class FormComponent implements OnInit {
 
     this.stateService.getRespondentData().subscribe(respondentData => {
       if (respondentData) this.respondent = respondentData;
+      console.log("RespondentData: ", respondentData);
     });
 
     this.stateService.getSurveyId().subscribe(surveyId => {
       if (surveyId) this.surveyId = surveyId;
+      console.log("surveyid: ", surveyId);
+      if (surveyId==null||surveyId<0) this.goBack();
     });
   }
 

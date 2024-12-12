@@ -52,12 +52,21 @@ export class StateService {
     return storedId ? JSON.parse(storedId) : null;
   }
 
+  private surveyIdSubject = new BehaviorSubject<number | null>(
+    this.getSurveyIdFromStorage()
+  );
   setSurveyId(id: number): void {
-    this.surveyId.next(id);
+    localStorage.setItem('surveyId', id.toString()); // Guardar en localStorage
+    this.surveyIdSubject.next(id);
   }
 
   getSurveyId() {
-    return this.surveyId.asObservable();
+    return this.surveyIdSubject.asObservable();
+  }
+
+  private getSurveyIdFromStorage(): number | null {
+    const storedId = localStorage.getItem('surveyId');
+    return storedId ? parseInt(storedId, 10) : null;
   }
 
 }

@@ -13,13 +13,17 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
   templateUrl: './heatmap.component.html',
   styleUrls: ['./heatmap.component.css']
 })
-export class HeatmapComponent implements OnInit {
+export class HeatmapComponent implements OnInit, AfterViewInit  {
+  @ViewChild('canvas', { static: false }) canvas!: ElementRef<HTMLCanvasElement>;
   heatMap!: IHeatMap;
   formId!: number;
   isLoading = true;
   initialData = true;
   currentQuestionIndex = 0;
   totalQuestions!: number;
+
+  private ctx!: CanvasRenderingContext2D;
+
   constructor(    private formApiService: FormApiService,
                   private stateService: StateService,
                   private router: Router,
@@ -47,9 +51,60 @@ export class HeatmapComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(): void {
+    this.initCanvas();
+  }
+
+
+  private initCanvas(): void {
+
+    if (!this.canvas) {
+      console.error('Canvas element not found!');
+      return;
+    }
+
+    if (this.canvas) {
+      const canvasEl = this.canvas.nativeElement;
+      canvasEl.width = window.innerWidth;
+      canvasEl.height = window.innerHeight;
+      this.ctx = canvasEl.getContext('2d')!;
+      console.log('Canvas was inited')
+
+    }
+  }
+
+
   get currentQuestion(): Question {
     return this.heatMap.questions[this.currentQuestionIndex];
   }
+
+  private drawLines(): void {
+    if (!this.ctx) return;
+    console.log("THIS.CTX EXIST")
+    const canvas = this.canvas.nativeElement;
+    const decisions = this.currentQuestion.decisions;
+
+    // Limpiar canvas
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Dibujar líneas basadas en las coordenadas del mouse
+    decisions.forEach(decision => {
+      if (decision.mouseCoordinates.length > 1) {
+        this.ctx.beginPath();
+        const coordinates = decision.mouseCoordinates;
+
+        this.ctx.moveTo(coordinates[0].x, coordinates[0].y); // Punto inicial
+        for (let i = 1; i < coordinates.length; i++) {
+          this.ctx.lineTo(coordinates[i].x, coordinates[i].y); // Conectar puntos
+        }
+
+        this.ctx.strokeStyle = '#0d6efd'; // Color de línea
+        this.ctx.lineWidth = 2; // Grosor de línea
+        this.ctx.stroke();
+      }
+    });
+  }
+
 
   showHeatMaps(){
     this.initialData = false;
@@ -58,6 +113,7 @@ export class HeatmapComponent implements OnInit {
   previousQuestion() {
     if (this.currentQuestionIndex > 0) {
       this.currentQuestionIndex--;
+      this.drawLines();
     } else {
       this.initialData = true;
     }
@@ -65,6 +121,7 @@ export class HeatmapComponent implements OnInit {
   nextQuestion(){
     if (this.currentQuestionIndex < this.totalQuestions - 1) {
       this.currentQuestionIndex++;
+      this.drawLines();
     } else {
 
     }
