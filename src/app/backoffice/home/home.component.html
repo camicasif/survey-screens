@@ -1,4 +1,3 @@
-
 <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
@@ -7,7 +6,7 @@
 
 
   <!-- Content -->
-  <div >
+  <div>
     <div class="d-flex justify-content-between align-items-center mb-4">
       <h2 class="mb-0">Lista de Formularios</h2>
       <button mat-raised-button color="primary" (click)="addForm()">Agregar formulario</button>
@@ -38,6 +37,14 @@
               (click)="editForm(form)"
             >
               <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              color="warn"
+              aria-label="Ver mapa de calor"
+              (click)="viewHeatMap(form)"
+            >
+              <mat-icon>bar_chart</mat-icon>
             </button>
           </div>
         </div>

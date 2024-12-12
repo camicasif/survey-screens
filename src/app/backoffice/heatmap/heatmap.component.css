@@ -1,25 +1,133 @@
-.heatmap-container {
-  position: relative;
-  width: 800px;
-  height: 600px;
-  border: 1px solid black;
+
+/** {*/
+/*  border: 1px solid blue !important;*/
+/*}*/
+.container {
+  width: 1200px;
+  min-width: 1200px;
+  max-width: 1200px;
+  height: 630px;
+  min-height: 630px;
+  max-height: 630px;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ddd;
+  /*padding: 20px;*/
+  background-color: #f9f9f9;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
+
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;        /* Ocupa todo el ancho */
+  height: 100%;       /* Ocupa todo el alto */
+  gap: 0;
 }
 
-.block {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background-color: rgba(0, 0, 255, 0.5);
-  border: 1px solid blue;
-  border-radius: 5px;
+/* Estilo para la pregunta */
+.question-container {
+  flex: 0 0 20%;      /* Ocupa el 20% de la altura */
+  width: 100%;        /* Ancho completo */
+  padding: 0;
+}
+
+/* Respuestas ocupan el 50% de la pantalla */
+.answers-container {
+  flex: 0 0 50%;      /* Ocupa el 50% de la altura */
+  width: 100%;        /* Ancho completo */
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+.buttons-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around !important;
+}
+.answer-button-div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.answer-button {
+  height: 50%;
+  width: 90%;
+}
+/* Botón "Continuar" bien centrado */
+.continue-button-container {
+  flex: 0 0 10%;      /* Ocupa el 10% de la altura */
+  width: 100%;        /* Ancho completo */
+  text-align: center;
+  padding: 0;
+}
+
+.footer-container {
+  flex: 0 0 10%;      /* Ocupa el 10% de la altura */
+  width: 100%;        /* Ancho completo */
+  padding: 5px 10px;
+  font-size: 0.9em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.custom-btn {
+  display: flex;
+  font-weight: 400;
+  color: #0d6efd; /* Color del texto */
+  text-align: center; /* Centra el texto horizontalmente */
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle; /* Centra el texto verticalmente */
+  user-select: none; /* Desactiva la selección de texto */
+  background-color: transparent; /* Fondo transparente */
+  border: 1px solid #0d6efd; /* Borde con color primario */
+  padding: 0.5rem 1rem; /* Aumenta el padding */
+  font-size: 1.25rem; /* Fuente más grande */
+  line-height: 1.5; /* Altura de línea */
+  border-radius: 0.375rem; /* Bordes redondeados */
+  transition: none; /* Sin transiciones */
+}
+
+.btn-icon {
+  background: none; /* Sin fondo */
+  border: none;     /* Sin borde */
+  font-size: 1.2em; /* Tamaño del ícono */
+  color: #dc3545;   /* Color del ícono */
   cursor: pointer;
-  z-index: 2;
+}
+
+.btn-icon:hover {
+  color: #b02a37; /* Color de hover */
+}
+
+/*.full-screen-container {*/
+/*  height: 100vh;*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+
+.full-screen-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;     /* Ocupa todo el alto de la ventana */
+  background-color: #f0f0f0; /* Opcional: color de fondo para toda la pantalla */
+}
+
+.bi-check-circle-fill {
+  font-size: 4rem;
 }

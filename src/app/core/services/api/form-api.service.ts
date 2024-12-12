@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpService } from '../http/http.service';
 import { SimpleForm, FormComplete, Form, AuthData, ResponseAuth } from '../../models/form.model';
+import { IHeatMap } from '../../../backoffice/heatmap/heat-map.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,6 +21,10 @@ export class FormApiService {
 
   getFormWithQuestionsAndAnswers(id:number): Observable<FormComplete> {
     return this.httpService.get<FormComplete>(`${this.baseUrl}/${id}`);
+  }
+
+  getHeatMap(formId:number): Observable<IHeatMap> {
+    return this.httpService.get<IHeatMap>(`${this.baseUrl}/${formId}/heatmap`);
   }
 
   updateFormStatus(formId: number, isOpen: boolean): Observable<void> {

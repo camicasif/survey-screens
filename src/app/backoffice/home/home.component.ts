@@ -78,4 +78,10 @@ export class HomeComponent implements OnInit{
     this.router.navigate(['/create-edit-form']);
     // Implementa la lógica para abrir un modal o navegar a la página de creación de formulario
   }
+
+
+  viewHeatMap(form: any) {
+    this.stateService.setFormId(form.id);
+    this.router.navigate(['/heatmap']);
+  }
 }

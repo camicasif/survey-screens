@@ -1,4 +1,4 @@
-import { Answer } from '../core/models/form.model';
+import { Answer } from '../../core/models/form.model';
 
 
 export interface IHeatMap {
