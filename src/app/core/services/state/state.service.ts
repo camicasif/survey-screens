@@ -7,11 +7,11 @@ import { Respondent } from '../../models/respondent.model';
   providedIn: 'root'
 })
 export class StateService {
+
   private respondentData = new BehaviorSubject<Respondent | null>(this.getStoredRespondentData());
   private formId = new BehaviorSubject<number | null>(this.getStoredFormId());
-  private surveyId = new BehaviorSubject<number | null>(null); // Nueva propiedad para surveyId
+  private surveyId = new BehaviorSubject<number | null>(this.getStoredSurveyId()); // Sincronizado con localStorage
   private accessToken = new BehaviorSubject<String | null>(null);
-
 
   setAccessToken(token: String): void {
     this.accessToken.next(token);
@@ -31,7 +31,7 @@ export class StateService {
     return this.respondentData.asObservable();
   }
 
-  setFormId(id: number|null): void {
+  setFormId(id: number | null): void {
     this.formId.next(id);
     localStorage.setItem('formId', JSON.stringify(id));
   }
@@ -52,21 +52,24 @@ export class StateService {
     return storedId ? JSON.parse(storedId) : null;
   }
 
-  private surveyIdSubject = new BehaviorSubject<number | null>(
-    this.getSurveyIdFromStorage()
-  );
+  // Survey ID Management
   setSurveyId(id: number): void {
-    localStorage.setItem('surveyId', id.toString()); // Guardar en localStorage
-    this.surveyIdSubject.next(id);
+    this.surveyId.next(id); // Actualiza el BehaviorSubject
+    localStorage.setItem('surveyId', id.toString()); // Persiste en localStorage
   }
 
-  getSurveyId() {
-    return this.surveyIdSubject.asObservable();
+  getSurveyId(): Observable<number | null> {
+    return this.surveyId.asObservable(); // Devuelve el observable del BehaviorSubject
   }
 
-  private getSurveyIdFromStorage(): number | null {
+  private getStoredSurveyId(): number | null {
     const storedId = localStorage.getItem('surveyId');
-    return storedId ? parseInt(storedId, 10) : null;
+    return storedId ? parseInt(storedId, 10) : null; // Recupera el valor persistido en localStorage
+  }
+
+  clearSurveyId(): void {
+    this.surveyId.next(null); // Actualiza el BehaviorSubject
+    localStorage.removeItem('surveyId'); // Limpia el almacenamiento local
   }
 
 }
