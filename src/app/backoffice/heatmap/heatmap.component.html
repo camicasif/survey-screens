@@ -1,31 +1,35 @@
+<div id="principal-container">
 <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center vh-100">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
 <canvas #canvas class="overlay-canvas"></canvas>
 
-<div  *ngIf="!isLoading &&initialData">
-  <div class="container p-5" *ngIf="initialData">
-    <!-- Título del formulario -->
-    <h1 class="card-title text-center mb-3">{{ heatMap.title }}</h1>
-    <p class="card-text text-center text-muted mb-4">{{ heatMap.description }}</p>
 
-    <!-- Información adicional -->
-    <div class="text-center mt-4 mb-5">
-      <p class="mb-2"><strong>Número de veces tomado:</strong> {{ heatMap.nTimesTaken }}</p>
-      <p><strong>Cantidad de preguntas:</strong> {{ heatMap.questions.length }}</p>
-      <p><strong>Tiempo máximo por pregunta:</strong> 2 mins</p>
-    </div>
+<div  class="full-screen-container " *ngIf="!isLoading" >
 
-    <!-- Botón Empezar -->
-    <div class="d-flex justify-content-center mt-5">
-      <button class="btn btn-primary btn-lg px-4" (click)="showHeatMaps()">Ver mapas</button>
-    </div>
+  <!--<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="!isLoading">-->
+  <div class="container p-5" *ngIf="initialData" id="initial-data">
+      <!-- Título del formulario -->
+      <h1 class="card-title text-center mb-3">{{ heatMap.title }}</h1>
+      <p class="card-text text-center text-muted mb-4">{{ heatMap.description }}</p>
+
+      <!-- Información adicional -->
+      <div class="text-center mt-4 mb-5">
+        <p class="mb-2"><strong>Número de veces tomado:</strong> {{ heatMap.nTimesTaken }}</p>
+        <p><strong>Cantidad de preguntas:</strong> {{ heatMap.questions.length }}</p>
+        <p><strong>Tiempo máximo por pregunta:</strong> 2 mins</p>
+      </div>
+
+      <!-- Botón Empezar -->
+      <div class="d-flex justify-content-center mt-5">
+        <button class="btn btn-primary btn-lg px-4" (click)="showHeatMaps()">Ver mapas</button>
+        <button class="btn btn-secondary btn-lg px-4 ms-3" (click)="downloadHeatMaps()">Descargar mapas</button>
+
+      </div>
+
   </div>
-</div>
 
-<div  class="full-screen-container " *ngIf="!isLoading && !initialData">
-<!--<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="!isLoading">-->
-  <div class="container p-5 d-flex flex-column justify-content-between form-container">
+  <div *ngIf="!initialData" class="container p-5 d-flex flex-column justify-content-between form-container" id="heatmap-container">
 
 <!--    &lt;!&ndash; Pregunta en la parte superior &ndash;&gt;-->
     <div class="question-container text-center">
@@ -67,3 +71,4 @@
   </div>
 </div>
 
+</div>

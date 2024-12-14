@@ -41,7 +41,7 @@
 
   <!-- Botón para agregar respuesta -->
   <div class="d-flex justify-content-end mt-3">
-    <button mat-stroked-button type="button" (click)="addResponse()" [disabled]="responses.length >= 4">
+    <button mat-stroked-button type="button"  *ngIf="canDelete" (click)="addResponse()" [disabled]="responses.length >= 4">
       Agregar Respuesta
     </button>
   </div>
