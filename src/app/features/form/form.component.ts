@@ -26,6 +26,8 @@ export class FormComponent implements OnInit {
   timer: any;
   showQuestionAndAnswers = false;  // Controla si se muestran las preguntas y respuestas
   mouseCoordinates: { x: number; y: number }[] = [];
+  mouseCoordinatesInfo: { x: number; y: number,clientX:number;clientY:number; documentWidth: number;documentHeigth:number; rectWidth:number;rectHeigth:number  }[] = [];
+
   questionStartTime!: number;
   totalQuestionStartTime!: number;
   formCompleted:boolean=false;
@@ -181,10 +183,38 @@ export class FormComponent implements OnInit {
       const container = document.getElementById('form-container');
       if (container) {
         const rect = container.getBoundingClientRect();
-        const x = event.clientX - rect.left; // Coordenada X relativa al contenedor
-        const y = event.clientY - rect.top;  // Coordenada Y relativa al contenedor
+
+        // Obtener el ancho y alto del documento
+        const documentWidth = document.documentElement.clientWidth;
+        const documentHeight = document.documentElement.clientHeight;
+
+        // Ajustar las coordenadas restando el desplazamiento central
+        const x = event.clientX - ((documentWidth - rect.width) / 2);
+        const y = event.clientY - ((documentHeight - rect.height) / 2);
+
+        // Log para depuración
+        console.log('Mouse event:', { clientX: event.clientX, clientY: event.clientY });
+        console.log('Document dimensions:', { width: documentWidth, height: documentHeight });
+        console.log('Bounding Rect:', { left: rect.left, top: rect.top, width: rect.width, height: rect.height });
+        console.log('Relative Coordinates:', { x, y });
+
+
         this.mouseCoordinates.push({ x, y });
+
+        this.mouseCoordinatesInfo.push({
+          x,
+          y,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          documentWidth,
+          documentHeigth: documentHeight,
+          rectWidth: rect.width,
+          rectHeigth: rect.height,
+        });
+      } else {
+        console.error('Contenedor form-container no encontrado.');
       }
     }
   }
+
 }
