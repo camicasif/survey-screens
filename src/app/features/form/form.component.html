@@ -20,7 +20,11 @@
 </div>
 
 <!-- Vista de Pregunta Activa -->
-<div class="full-screen-container d-flex justify-content-center align-items-center" *ngIf="isQuizActive && !formCompleted">
+<div
+  id="form-container"
+  class="full-screen-container d-flex justify-content-center align-items-center"
+  *ngIf="isQuizActive && !formCompleted"
+  (mousemove)="trackMouse($event)">
   <div class="container p-5 d-flex flex-column justify-content-between form-container">
 
     <!-- Pregunta en la parte superior -->

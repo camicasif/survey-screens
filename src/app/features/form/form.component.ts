@@ -169,10 +169,22 @@ export class FormComponent implements OnInit {
   goBack(): void {
     this.router.navigate(['/']);
   }
-  @HostListener('document:mousemove', ['$event'])
-  trackMouse(event: MouseEvent) {
+  // @HostListener('document:mousemove', ['$event'])
+  // trackMouse(event: MouseEvent) {
+  //   if (this.showQuestionAndAnswers) {
+  //     this.mouseCoordinates.push({ x: event.clientX, y: event.clientY });
+  //   }
+  // }
+
+  trackMouse(event: MouseEvent): void {
     if (this.showQuestionAndAnswers) {
-      this.mouseCoordinates.push({ x: event.clientX, y: event.clientY });
+      const container = document.getElementById('form-container');
+      if (container) {
+        const rect = container.getBoundingClientRect();
+        const x = event.clientX - rect.left; // Coordenada X relativa al contenedor
+        const y = event.clientY - rect.top;  // Coordenada Y relativa al contenedor
+        this.mouseCoordinates.push({ x, y });
+      }
     }
   }
 }
