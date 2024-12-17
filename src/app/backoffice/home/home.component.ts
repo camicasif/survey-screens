@@ -9,6 +9,8 @@ import { MatList, MatListItem } from '@angular/material/list';
 import { MatButton, MatIconButton } from '@angular/material/button';
 import { Router } from '@angular/router';
 import { StateService } from '../../core/services/state/state.service';
+import { SurveyApiService } from '../../core/services/api/survey-api.service';
+import Notiflix, { Notify } from 'notiflix';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit{
   constructor(private formApiService: FormApiService,
               private router: Router,
               private stateService: StateService,
+              private surveyService: SurveyApiService,
   ) {}
 
   ngOnInit(): void {
@@ -83,5 +86,27 @@ export class HomeComponent implements OnInit{
   viewHeatMap(form: any) {
     this.stateService.setFormId(form.id);
     this.router.navigate(['/heatmap']);
+  }
+
+  exportExcel(form: any): void {
+    this.surveyService.exportExcel(form.id).subscribe({
+      next: (data: Blob) => {
+        // Crear un objeto URL para el archivo Blob
+        const url = window.URL.createObjectURL(data);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `formulario_${form.id}_${form.title}.xlsx`; // Nombre del archivo descargado
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url); // Liberar la memoria
+        a.remove();
+
+        Notiflix.Report.success("Descarga exitosa",`El archivo "formulario_${form.id}_${form.title}.xlsx" se descargó correctamente.`, "ok");
+
+      },
+      error: (error) => {
+        console.error('Error al exportar el archivo Excel:', error);
+      },
+    });
   }
 }

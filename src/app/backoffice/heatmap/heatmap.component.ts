@@ -66,42 +66,10 @@ export class HeatmapComponent implements OnInit, AfterViewInit {
       console.error('Canvas element not found!');
       return;
     }
-
     const canvasEl = this.canvas.nativeElement;
-    canvasEl.width = window.innerWidth;
-    canvasEl.height = window.innerHeight;
+    canvasEl.width = 1200;
+    canvasEl.height = 630;
     this.ctx = canvasEl.getContext('2d')!;
-    console.log('Canvas was inited');
-
-    this.ctx.beginPath();
-    this.ctx.moveTo(0, 0);
-    this.ctx.lineTo(10, 10);
-    this.ctx.moveTo(10, 0);
-    this.ctx.lineTo(0, 10);
-    this.ctx.strokeStyle = 'red';
-    this.ctx.lineWidth = 2;
-    this.ctx.stroke();
-
-    // Agregar texto en (0, 0)
-    this.ctx.font = '12px Arial';
-    this.ctx.fillStyle = 'black';
-    this.ctx.fillText('(0, 0)', 15, 15);
-
-    // Calcular el centro del canvas
-    const centerX = canvasEl.width / 2;
-    const centerY = canvasEl.height / 2;
-
-    // Dibujar texto en el centro
-    this.ctx.font = '16px Arial';
-    this.ctx.fillStyle = 'blue';
-    this.ctx.textAlign = 'center';
-    this.ctx.fillText(`Centro: (${centerX}, ${centerY})`, centerX, centerY);
-
-    // Dibujar un círculo o punto en el centro para referencia
-    this.ctx.beginPath();
-    this.ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
-    this.ctx.fillStyle = 'green';
-    this.ctx.fill();
   }
 
 

@@ -31,4 +31,11 @@ export class SurveyApiService {
     return this.httpService.patch<Survey>(`${this.baseUrl}/${id}/delete`, {});
   }
 
+  exportExcel(formId: number): Observable<Blob> {
+    return this.httpService.get(`${this.baseUrl}/export`, {
+      params: { formId },
+      responseType: 'blob', // Necesario para manejar archivos binarios
+    });
+  }
+
 }
