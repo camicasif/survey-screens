@@ -49,20 +49,20 @@
       <button *ngIf="!showQuestionAndAnswers" class="btn btn-primary btn-lg" (click)="startQuestion()">Continuar</button>
     </div>
 
-    <div
-      style="position: fixed; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px; border-radius: 5px;">
-      <p *ngIf="mouseCoordinatesInfo.length > 0">
-        Última Coordenada -
-        X: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].x }},
-        Y: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].y }},
-        ClientX: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].clientX }},
-        ClientY: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].clientY }},
-        DocWidth: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].documentWidth }},
-        DocHeight: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].documentHeigth }},
-        RectWidth: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].rectWidth }},
-        RectHeight: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].rectHeigth }}
-      </p>
-    </div>
+<!--    <div-->
+<!--      style="position: fixed; bottom: 10px; left: 10px; background: rgba(0, 0, 0, 0.8); color: white; padding: 10px; border-radius: 5px;">-->
+<!--      <p *ngIf="mouseCoordinatesInfo.length > 0">-->
+<!--        Última Coordenada - -->
+<!--        X: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].x }},-->
+<!--        Y: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].y }},-->
+<!--        ClientX: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].clientX }},-->
+<!--        ClientY: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].clientY }},-->
+<!--        DocWidth: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].documentWidth }},-->
+<!--        DocHeight: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].documentHeigth }},-->
+<!--        RectWidth: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].rectWidth }},-->
+<!--        RectHeight: {{ mouseCoordinatesInfo[mouseCoordinatesInfo.length - 1].rectHeigth }}-->
+<!--      </p>-->
+<!--    </div>-->
     <div class="footer-container d-flex justify-content-between align-items-center">
       <span class="text-muted">{{ currentQuestionIndex + 1 }}/{{ totalQuestions }}</span>
       <span class="text-muted">Tiempo restante: {{ timerDisplay }}</span>
